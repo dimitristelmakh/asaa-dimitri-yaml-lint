@@ -1,0 +1,1 @@
+# asaa-dimitri-yaml-lint
