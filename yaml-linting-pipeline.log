@@ -1,0 +1,24 @@
++ CHECKOUT_DIR=/workspace/output/
++ [[ true == \t\r\u\e ]]
++ cleandir
++ [[ -d /workspace/output/ ]]
++ rm -rf '/workspace/output//*'
++ rm -rf '/workspace/output//.[!.]*'
++ rm -rf '/workspace/output//..?*'
++ test -z ''
++ test -z ''
++ test -z ''
++ /ko-app/git-init -url https://github.com/dimitristelmakh/asaa-dimitri-yaml-lint.git -revision '' -refspec '' -path /workspace/output/ -sslVerify=true -submodules=true -depth 1
+{"level":"info","ts":1629445466.6371517,"caller":"git/git.go:157","msg":"Successfully cloned https://github.com/dimitristelmakh/asaa-dimitri-yaml-lint.git @ 899666e5685e21c877d4714bab4164502119227f (grafted, HEAD) in path /workspace/output/"}
+{"level":"info","ts":1629445466.88417,"caller":"git/git.go:198","msg":"Successfully initialized and updated submodules in path /workspace/output/"}
++ cd /workspace/output/
+++ git rev-parse HEAD
++ RESULT_SHA=899666e5685e21c877d4714bab4164502119227f
++ EXIT_CODE=0
++ '[' 0 '!=' 0 ']'
++ echo -n 899666e5685e21c877d4714bab4164502119227f
++ echo -n https://github.com/dimitristelmakh/asaa-dimitri-yaml-lint.git
+./yaml-linter-pipeline-assignment-2.yaml
+  1:1       warning  missing document start "---"  (document-start)
+  53:27     error    no new line character at the end of file  (new-line-at-end-of-file)
+
