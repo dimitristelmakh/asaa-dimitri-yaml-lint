@@ -1,0 +1,53 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: yaml-linter-pipeline-assignment
+spec:
+  params:
+    - name: source-repo
+      type: string
+      description: Source code repository
+  workspaces:
+    - name: pipeline-shared-data
+  tasks:
+    - name: clone-repository
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      params:
+        - name: url
+          value: "$(params.source-repo)"
+      workspaces:
+        - name: output
+          workspace: pipeline-shared-data
+    - name: yaml-lint
+      params:
+        - name: args
+          value: ["."]
+      runAfter:
+        - clone-repository
+      taskRef:
+        name: yaml-lint
+      workspaces:
+        - name: shared-workspace
+          workspace: pipeline-shared-data
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: yaml-linter-pipeline-assignment-
+spec:
+  params:
+    - name: source-repo
+      value: https://github.com/dimitristelmakh/asaa-dimitri-yaml-lint.git
+  pipelineRef:
+    name: yaml-linter-pipeline-assignment
+  workspaces:
+    - name: pipeline-shared-data
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
